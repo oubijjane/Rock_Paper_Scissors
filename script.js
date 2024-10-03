@@ -9,20 +9,20 @@ creation a function result() to select the proper comparaison method
 depending in the value of the variable assinged to the function
 add the result() function to the userInput() function
 */
-let computerChoices = ["rock","paper","scissors"];
+let computerChoices = ["rock", "paper", "scissors"];
 let humanSelsection;
-let computerSelection 
+let computerSelection
 let humanScore = 0;
 let computerScore = 0;
 
 function getComputerChoice(number) {
-  return computerChoices[getRandomNUmber()];
+    return computerChoices[getRandomNUmber()];
 }
 
 function getRandomNUmber() {
     const minCeiled = Math.ceil(0);
-  const maxFloored = Math.floor(computerChoices.length);
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+    const maxFloored = Math.floor(computerChoices.length);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 }
 
 function getHumanChoice() {
@@ -42,7 +42,7 @@ function lose() {
 
 function rock(x) {
     console.log(x)
-    if(x === "scissors") {
+    if (x === "scissors") {
         return win();
     }
     return lose();
@@ -50,7 +50,7 @@ function rock(x) {
 
 function paper(x) {
     console.log(x)
-    if(x === "rock") {
+    if (x === "rock") {
         return win();
     }
     return lose();
@@ -58,18 +58,11 @@ function paper(x) {
 
 function scissors(x) {
     console.log(x)
-    if(x === "paper") {
+    if (x === "paper") {
         return win();
     }
     return lose();
 }
-
-let numberOfROund = prompt("number of rounds?");
-for(i = 0 ; i < numberOfROund; i++){
-
-    humanSelsection = getHumanChoice().toLowerCase();
-    computerSelection = getComputerChoice();
-
 function playRound(HumanChoice, computerChoice) {
     console.log(HumanChoice +" " + computerChoice);
     if(HumanChoice == computerChoice) {
@@ -87,9 +80,53 @@ function playRound(HumanChoice, computerChoice) {
 
     return "no valid choise";
 }
-console.log(playRound(humanSelsection, computerSelection));
-console.log("human score " + humanScore + " computer score " + computerScore)
-}
+
+const body = document.querySelector("body");
+const btn = document.createElement("button");
+const div = document.createElement("div");
+const btnR = document.createElement("button");
+const btnP = document.createElement("button");
+const btnS = document.createElement("button");
+const result = document.createElement("div");
+result.id = "result";
+btnR.id = "rock"
+btnP.id = "paper";
+btnS.id = "scissors";
+btnR.textContent = "rock";
+btnP.textContent = "paper";
+btnS.textContent = "scissors";
+btn.textContent = "play round";
+btn.id = "playRound";
+body.addEventListener("click", (e) => {
+
+    switch (e.target.id) {
+        case "playRound":
+            div.appendChild(btnR);
+            div.appendChild(btnP);
+            div.appendChild(btnS);
+            body.appendChild(div);
+            body.removeChild(result);
+            break;
+        default:
+            console.log(playRound(e.target.id, getComputerChoice()));
+            result.textContent = "human score " + humanScore + " computer score " + computerScore;
+            body.appendChild(result);
+
+    }
+    if(humanScore >= 5) {
+        result.textContent = "you win";
+        body.removeChild(div);
+        humanScore = 0;
+        computerScore = 0;
+    }
+    if(computerScore >= 5) {
+        result.textContent = "you loose";
+        body.removeChild(div);
+        humanScore = 0;
+        computerScore = 0;
+    }
+})
+body.appendChild(btn);
 
 
 
